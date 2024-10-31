@@ -8,6 +8,7 @@ on:
 env:
   PROJECT_ID: hijra-440311
   COMPUTE_ZONE: asia-south2-a
+  
 jobs:
   terraform_plan:
     runs-on: ubuntu-latest
@@ -28,11 +29,14 @@ jobs:
 
       - name: Configure Terraform
         run: |
-          echo ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }} > key.json
-          gcloud auth activate-service-account --key-file=key.json
-          gcloud config set project ${{ env.PROJECT_ID }}
-          gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
-          rm -f key.json
+            echo "Service Account Key: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}"
+            echo "Project ID: ${{ env.PROJECT_ID }}"
+            echo "Compute Zone: ${{ env.COMPUTE_ZONE }}"
+            echo ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }} > key.json
+            gcloud auth activate-service-account --key-file=key.json
+            gcloud config set project ${{ env.PROJECT_ID }}
+            gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
+            rm -f key.json
 
       - name: Initialize Terraform
         run: terraform init
