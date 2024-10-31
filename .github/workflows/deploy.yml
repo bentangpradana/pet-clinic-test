@@ -33,7 +33,8 @@ jobs:
             echo "Project ID: ${{ env.PROJECT_ID }}"
             echo "Compute Zone: ${{ env.COMPUTE_ZONE }}"
 
-            echo ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }} > key.json
+            echo ${{ env.service_account_key }} > key.json
+            cat key.json
             gcloud auth activate-service-account --key-file=key.json
             gcloud config set project ${{ env.PROJECT_ID }}
             gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
