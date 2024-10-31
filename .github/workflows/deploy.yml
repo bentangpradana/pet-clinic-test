@@ -36,7 +36,6 @@ jobs:
             gcloud auth activate-service-account --key-file=key.json
             gcloud config set project ${{ env.PROJECT_ID }}
             gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
-            rm -f key.json
 
       - name: Initialize Terraform
         run: terraform init
