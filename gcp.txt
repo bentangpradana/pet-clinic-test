@@ -1,0 +1,17 @@
+# let's say project_id is someproject
+# set the project in cloud shell. 
+gcloud config set project someproject
+
+# Creating service account
+gcloud iam service-accounts create somesvc \
+    --description="DESCRIPTION" \
+    --display-name="resource-manager-list"
+
+# Assigning project level owner role to service account
+gcloud projects add-iam-policy-binding hijra-440311 --member="serviceAccount:somesvc@hijra-440311.iam.gserviceaccount.com" --role="roles/owner"
+
+# Creating key
+gcloud iam service-accounts keys create somesvc.json --iam-account somesvc@hijra-440311.iam.gserviceaccount.com
+
+
+export GOOGLE_APPLICATION_CREDENTIALS=somesvc.json
