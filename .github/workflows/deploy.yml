@@ -39,16 +39,23 @@ jobs:
           gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
 
       - name: Initialize Terraform
-        run: terraform init
+        run: |
+          cd terraform  # Berpindah ke direktori terraform
+          terraform init
 
       - name: Validate Terraform configuration
-        run: terraform validate
+        run: |
+          cd terraform  # Pastikan berada di direktori terraform
+          terraform validate
 
       - name: Plan Terraform deployment
-        run: terraform plan -out=tfplan -lock=false
+        run: |
+          cd terraform  # Berpindah ke direktori terraform
+          terraform plan -out=tfplan -lock=false
 
       - name: Save Terraform plan output
         run: |
+          cd terraform  # Pastikan berada di direktori terraform
           terraform show -json tfplan > plan.json
         id: save_plan
 
