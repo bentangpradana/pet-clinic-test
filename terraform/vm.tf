@@ -24,8 +24,8 @@ resource "google_compute_instance" "default" {
 
 # network config
   network_interface {
-    network            = var.subnetwork_name
-    subnetwork         = var.vpc_name
+    network            = var.vpc_name
+    subnetwork         = var.subnetwork_name
     subnetwork_project = var.project_id
   }
 

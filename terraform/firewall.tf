@@ -43,11 +43,11 @@ resource "google_compute_router_nat" "nat_gateway" {
   name                    = "my-nat-gateway"
   router                  = google_compute_router.nat_router.name
   nat_ip_allocate_option   = "AUTO_ONLY"
-  project                 = var.project_id  # Optionally add the project ID here as well
+  project                 = var.project_id
   region                  = var.region
 
-  # Allow all subnetwork IP ranges to use NAT
-  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+  # Specify the option as LIST_OF_SUBNETWORKS
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
   # Define specific subnets that should route through the NAT gateway
   subnetwork {
