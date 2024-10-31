@@ -83,10 +83,16 @@ jobs:
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
 
+      - name: Initialize Terraform
+        run: |
+          cd terraform  # Berpindah ke direktori terraform
+          terraform init
+
       - name: Apply Terraform changes
         run: |
           cd terraform  # Change to the terraform directory
           terraform apply -auto-approve 
+          echo "::set-output name=instance_ip::$(terraform output -json instance_ip | jq -r .value)"  # Pastikan kamu mendefinisikan output di Terraform
 
   ansible_deploy:
       runs-on: ubuntu-latest
