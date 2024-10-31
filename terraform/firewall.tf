@@ -36,6 +36,7 @@ resource "google_compute_router" "nat_router" {
   name    = "my-nat-router"
   network = google_compute_network.default.self_link
   project = var.project_id
+  region  = var.region
 }
 
 resource "google_compute_router_nat" "nat_gateway" {
@@ -43,6 +44,7 @@ resource "google_compute_router_nat" "nat_gateway" {
   router                  = google_compute_router.nat_router.name
   nat_ip_allocate_option   = "AUTO_ONLY"
   project                 = var.project_id  # Optionally add the project ID here as well
+  region                  = var.region
 
   # Allow all subnetwork IP ranges to use NAT
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
