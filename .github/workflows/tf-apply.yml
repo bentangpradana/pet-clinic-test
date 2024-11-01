@@ -4,7 +4,10 @@ on:
     workflows: ["Terraform Plan"]
     types:
       - completed
-
+env:
+  PROJECT_ID: hijra-440311
+  COMPUTE_ZONE: asia-south2
+  
 jobs:
   terraform_apply:
     runs-on: ubuntu-latest
