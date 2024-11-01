@@ -1,0 +1,7 @@
+zone            = "asia-south2-a"  
+vm_machine_type = "e2-standard-4"
+region          = "asia-south2"     
+subnetwork_name= "subnet-test"
+vpc_name= "vpc-test"
+project_id = "hijra-440311"
+subnet_cidr= "10.0.0.0/24"

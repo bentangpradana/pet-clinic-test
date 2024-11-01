@@ -47,5 +47,5 @@ _site/
 !petclinic.css
 
 ### TF ###
-terraform/
 *.terraform
+/terraform/.terraform.lock.hcl
