@@ -11,6 +11,7 @@ env:
 jobs:
   terraform_apply:
     runs-on: ubuntu-latest
+    if: github.event.conclusion == 'success'  # Hanya jalankan jika Terraform Plan berhasil
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -44,14 +45,13 @@ jobs:
 
       - name: Apply Terraform changes
         run: |
-          cd terraform  # Change to the terraform directory
-          terraform apply -auto-approve 
-          echo "::set-output name=instance_ip::$(terraform output -json instance_ip | jq -r .value)"  # Pastikan kamu mendefinisikan output di Terraform
+          cd terraform  # Berpindah ke direktori terraform
+          terraform apply -auto-approve  # Hapus ini jika ingin memicu secara manual
 
   ansible_deploy:
     runs-on: ubuntu-latest
     needs: terraform_apply
-    if: github.event_name == 'workflow_dispatch'  # Only run on manual trigger
+    if: github.event_name == 'workflow_dispatch'  # Hanya jalankan pada trigger manual
     permissions:
       contents: 'read'
       id-token: 'write'
