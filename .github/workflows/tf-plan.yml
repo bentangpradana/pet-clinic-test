@@ -1,0 +1,53 @@
+name: Terraform Plan
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: hijra-440311
+  COMPUTE_ZONE: asia-south2
+  
+jobs:
+  terraform_plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
+
+      - name: Set up Google Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Configure Google Cloud
+        run: |
+          echo "Project ID: ${{ env.PROJECT_ID }}"
+          echo "Compute Zone: ${{ env.COMPUTE_ZONE }}"
+          gcloud config set project ${{ env.PROJECT_ID }}
+          gcloud config set compute/zone ${{ env.COMPUTE_ZONE }}
+
+      - name: Initialize Terraform
+        run: |
+          cd terraform  # Berpindah ke direktori terraform
+          terraform init
+
+      - name: Validate Terraform configuration
+        run: |
+          cd terraform  # Pastikan berada di direktori terraform
+          terraform validate
+
+      - name: Plan Terraform deployment
+        run: |
+          cd terraform  # Berpindah ke direktori terraform
+          terraform plan -out=tfplan -lock=false
