@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   petclinic:
-    image: petclinic:latest
+    image: benja123/pet-clinic:IMAGETAG
     ports:
       - "8080:8080"
     depends_on:
