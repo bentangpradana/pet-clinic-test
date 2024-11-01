@@ -1,9 +1,15 @@
-variable "vpc_name" {
+variable "project_id" {
+  description = "GCP project id"
   type        = string
-  description = "The name of the VPC network"
 }
 
-variable "project_id" {
+variable "region" {
+  description = "GCP region"
   type        = string
-  description = "GCP project id"
+  default     = "asia-south2" # Default region, bisa diubah sesuai kebutuhan
+}
+
+variable "vpc_name" {
+  description = "The name of the VPC network"
+  type        = string
 }

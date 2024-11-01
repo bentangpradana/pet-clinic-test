@@ -29,3 +29,11 @@ module "bucket" {
   region        = var.region
   bucket_name   = "${var.project_id}-tfstate"
 }
+
+module "nat" {
+  source          = "./modules/nat"
+  vpc_name        = module.vpc.network_name
+  subnetwork_name = module.vpc.subnet_name  # Ganti dengan nama subnet yang sesuai
+  region          = var.region
+  project_id      = var.project_id
+}
