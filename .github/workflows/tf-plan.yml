@@ -92,3 +92,55 @@ jobs:
         run: |
           cd terraform  
           terraform apply -auto-approve 
+
+name: docker build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        
+      - name: Build the Docker image
+        run: docker build -t benja123/pet-clinic:${{ github.sha }} .
+
+      - name: Push to Dockerhub
+        run: docker push benja123/pet-clinic:${{ github.sha }}
+
+name: docker deploy
+
+on:
+  workflow_run:
+    workflows: ["docker build"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull Docker image
+        run: docker pull benja123/pet-clinic:${{ github.sha }}
+
+      - name: Update image tag in docker-compose.yml
+        run: |
+          sed -i "s|benja123/pet-clinic:.*|benja123/pet-clinic:${{ github.sha }}|g" docker-compose.yml
+
+      - name: Run Docker Container with Docker Compose
+        run: |
+          docker-compose up -d
