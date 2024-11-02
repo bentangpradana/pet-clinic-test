@@ -23,8 +23,11 @@ push code to repository or running manual on action page
 after they create vm and the other last deploy job  will stopped because they still didnt find any self hosted runner, so u must login to your created vm and install docker,docker-compose and github self hosted there.
 for the github self hosted go to setting > action > runner  > new self hosted .
 make sure u installed the self hosted in the vm.
-then u can run again the pipeline and voila ur deployment its already created there. 
+then u can run again the pipeline and voila ur deployment its already created there.
 
+noted : for this monitoring and logging deployment u must go to ur instance first and clone this repository and after that u can run the docker-compose run or u can just add it to pipeline,
+
+for the testing terraform and docker-compose  mannualy u can try to install docker,docker-compose,terraform and googlecloud sdk cli and login to ur gcp account then running manually:
 
 im using docker-compose for the service app and the database:
 
@@ -37,11 +40,10 @@ for the monitoring and logging im using docker compose too, jump to the folder m
 ```
 docker-compose up -d
 ```
-noted : for this monitoring and logging deployment u must go to ur instance first and clone this repository and after that u can run the docker-compose run or u can just add it to pipeline,
+
 
 for the testing terrafprm mannualy u can try to install googlecloud sdk cli and login to ur gcp account then running manually:
-dont forget to export ur gcp service account json :
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=/home/benja/somesvc.json
 ```
-then  run ur terraform init,and terraform plan 
+then  run ur docker-compose and terraform command.
