@@ -11,7 +11,7 @@ settings > secret and variable > action
 create 3 secrets here:
 
 ```
-CREDENTIALS_JSON (this is the gcp service account)
+CREDENTIALS_JSON (this is the gcp service account paste ur json key here)
 DOCKER_USERNAME (docker hub private registry username)
 DOCKER_PASSWORD (docker hub private registry password)
 
