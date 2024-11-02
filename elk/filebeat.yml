@@ -1,0 +1,18 @@
+filebeat.inputs:
+  - type: filestream
+    id: default-filestream
+    paths:
+      - /usr/share/filebeat/ingest_data/*.log  
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+      templates:
+        - condition:
+            equals:
+              docker.container.labels.co.elastic.logs/enabled: "true"
+          config:
+            - type: container
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
