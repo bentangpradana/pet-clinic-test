@@ -1,8 +1,8 @@
 # Spring PetClinic Sample Application 
 
 ## How to use it 
-login to your gcp or register with free tier
-create your project the name is hijra
+login to your gcp or register with free tier,
+create your project the name is hijra,
 create the service account under project the name is somesvc with owner and storage admin role.
 download the key on your create service account and create as json.
 
